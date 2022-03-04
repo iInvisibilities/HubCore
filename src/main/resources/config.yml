@@ -1,0 +1,184 @@
+#########################################################
+# ${project.name}:
+# DESCRIPTION: ${project.description}
+# VERSION: ${project.version}
+# AUTHOR: Invisibilities
+#########################################################
+
+GENERAL-SETTINGS:
+  JOIN_MESSAGE: false
+  LEAVE_MESSAGE: false
+  ENTITIES: false
+  MOBS: false
+  OTHER_ENTITIES: false
+  DAMAGE: false
+  HUNGER: false
+  EXPLOSION: false
+
+  # bypass permission: hub.block.break
+  BLOCK_BREAK: false
+
+  # bypass permission: hub.block.place
+  BLOCK_PLACE: false
+
+  # bypass permission: hub.pvp
+  PVP: false
+
+  # bypass permission: hub.item.throw
+  ITEM_THROW: false
+
+# type: BUNGEECORD, WORLD
+TYPE: WORLD
+
+DOUBLE-JUMP:
+  ENABLED: true
+  SOUND: EXPLODE #https://helpch.at/docs/1.8.8/org/bukkit/Sound.html
+  PARTICLE: MOBSPAWNER_FLAMES #https://helpch.at/docs/1.8.8/org/bukkit/Effect.html
+  POWER: 1
+  Y-AXIS: 0.5
+
+SERVER:
+  NAME: '&cAwesome'
+  LINKS:
+    WEBSITE: 'server.site'
+    STORE: 'store.server.site'
+    DISCORD: 'https://discord.gg/invite'
+    TWITTER: 'https://twitter.com/server'
+    FACEBOOK: 'https://www.facebook.com/groups/4206969420'
+    INSTAGRAM: 'https://www.instagram.com/server'
+    YOUTUBE: 'https://www.youtube.com/channel/UFUCKEDSHITLOLSOMECODEIDK'
+    TIKTOK: 'https://www.tiktok.com/@server'
+    somelink: 'custom.server.site'
+    someothercustomshit: 'archive.org'
+    examplelink: 'somethinghub.com'
+    examplelink2: 'google.com'
+
+JOIN-TITLE:
+  ENABLED: true
+  HEADER: '&eWelcome to <server>'
+  FOOTER: '&7Please enjoy your stay <player>!'
+
+TAB-LIST:
+  ENABLED: true
+  HEADER: '&7Server: <server> &f| &7Name: &f<player>'
+  FOOTER: '&7<WEBSITE>'
+
+WELCOME-MESSAGE:
+  ENABLED: true
+  CENTERED: true
+  CONTENT:
+    - ''
+    - '&3&l(&b!&3&l) &fWELCOME TO OUR SERVER &3&l(&b!&3&l)'
+    - 'Why hello <player>, welcome to <server>'
+    - '&cwebsite: &7<WEBSITE>'
+    - '&cstore: &7<STORE>'
+    - '&cdiscord: &7<DISCORD>'
+    - '&csome link: &7<somelink>'
+    - '&7fav site: &c<examplelink2>'
+    - ''
+
+HUB-ITEM:
+  ENABLED: true
+
+  SLOT: 0 # https://bugs.mojang.com/secure/attachment/61101/Items_slot_number.jpg
+
+  ITEMSTACK:
+    NAME:
+      CENTERED: true
+      CONTENT: '&cHub compass'
+    MATERIAL: COMPASS # https://helpch.at/docs/1.8.8/org/bukkit/Material.html
+    LORE:
+      CENTERED: true
+      CONTENT:
+        - '&7This is the hub compass'
+        - '&7It''ll show you the way to our wild server!'
+        - '&c<trigger> to open the servers menu'
+    AMOUNT: 1
+    GLOWING: true
+
+  # (RIGHT/LEFT)-CLICK
+  TRIGGER: RIGHT-CLICK
+
+  # [m] <message>: send a message to the player
+  # [i] open the hub inventory for the player
+
+  # https://helpch.at/docs/1.8.8/org/bukkit/Sound.html
+  # [s] <sound-type>: plays a sound for the player
+
+  # https://helpch.at/docs/1.8.8/org/bukkit/Effect.html
+  # [e] <effect-type>: plays an effect for the player
+
+  # executor: player, console
+  # [c] <executor> <command>: executes a command for the player
+  ACTION:
+    # NOTE: there should be a | between the params (& there shouldn't be any space between the | and the param).
+    - '[m]|&aOpening the hub servers menu for <server>&a, <player>...'
+    - '[i]'
+    - '[e]|HEART'
+    - '[s]|CAT_MEOW'
+    - '[c]|console|tell <player> Yo, shit opened bro.'
+
+HUB-INVENTORY:
+  TITLE: '<server> &8&lservers:'
+
+  SIZE: 54 # 9 => 54 (multiplier of 9)
+
+  ITEMS:
+    FILL: true
+    FILL-ITEM:
+      NAME:
+        CENTERED: false
+        CONTENT: '&f'
+      MATERIAL: STAINED_GLASS_PANE
+      LORE:
+        CENTERED: false
+        CONTENT: []
+      AMOUNT: 1
+      GLOWING: false
+
+    GAMEMODES:
+      Hub:
+
+        # NAME: the name of the server/world (depends on your configuration)
+        NAME: 'world'
+        SLOT: 22 # 0 => <size>
+        ITEMSTACK:
+          NAME:
+            CENTERED: false
+            CONTENT: '&7&lHUB'
+          MATERIAL: PAPER # https://helpch.at/docs/1.8.8/org/bukkit/Material.html
+          AMOUNT: 1
+          LORE:
+            CENTERED: false
+            CONTENT: []
+          GLOWING: false
+      Nether:
+        NAME: 'world_nether'
+        SLOT: 30 # 0 => <size>
+        ITEMSTACK:
+          NAME:
+            CENTERED: true
+            CONTENT: '&cNether'
+          MATERIAL: BED # https://helpch.at/docs/1.8.8/org/bukkit/Material.html
+          AMOUNT: 1
+          LORE:
+            CENTERED: true
+            CONTENT:
+              - '&7This is the &bNETHER'
+              - '&7Click this item to join the world.'
+          GLOWING: true
+      The_end:
+        NAME: 'world_the_end'
+        SLOT: 32 # 0 => <size>
+        ITEMSTACK:
+          NAME:
+            CENTERED: true
+            CONTENT: '&cThe end'
+          MATERIAL: ENDER_PEARL # https://helpch.at/docs/1.8.8/org/bukkit/Material.html
+          AMOUNT: 1
+          LORE:
+            CENTERED: true
+            CONTENT:
+              - '&7This is &bTHE END'
+              - '&7Click this item to join the world.'
+          GLOWING: true

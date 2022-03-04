@@ -1,0 +1,8 @@
+name: '${project.name}'
+version: '${project.version}'
+main: me.invis.hubcore.HubCore
+author: Invisibilities
+description: '${project.description}'
+website: '${project.url}'
+dependency:
+  - ProtocolLib
