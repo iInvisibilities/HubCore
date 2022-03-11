@@ -1,12 +1,15 @@
 package me.invis.hubcore.config.managers;
 
+import org.bukkit.entity.Player;
+
 public class TabList {
     private final boolean enabled;
-    private final String header;
-    private final String footer;
+    private final String header, footer;
+    private final Player target;
 
-    public TabList(boolean enabled, String... headerAndFooter) {
+    public TabList(Player target, boolean enabled, String... headerAndFooter) {
         this.enabled = enabled;
+        this.target = target;
         this.header = headerAndFooter[0];
         this.footer = headerAndFooter[1];
     }
@@ -21,5 +24,9 @@ public class TabList {
 
     public String footer() {
         return this.footer;
+    }
+
+    public Player target() {
+        return this.target;
     }
 }

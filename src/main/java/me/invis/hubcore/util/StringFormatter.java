@@ -3,7 +3,6 @@ package me.invis.hubcore.util;
 import me.invis.hubcore.HubCore;
 import me.invis.hubcore.config.ConfigManager;
 import me.invis.hubcore.util.centeredmessage.CenteredMessage;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -31,6 +30,8 @@ public class StringFormatter {
         input = ChatColor.translateAlternateColorCodes('&', input);
         if(isCentered) input = new CenteredMessage(input).output;
 
+        if(HubCore.PAPI) return me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(null, input);
+
         return input;
     }
 
@@ -52,6 +53,9 @@ public class StringFormatter {
 
         input = ChatColor.translateAlternateColorCodes('&', input);
         if(isCentered) input = new CenteredMessage(input).output;
+
+        if(HubCore.PAPI) return me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(target, input);
+
         return input;
     }
 }

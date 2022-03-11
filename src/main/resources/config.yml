@@ -4,6 +4,7 @@
 # VERSION: ${project.version}
 # AUTHOR: Invisibilities
 #########################################################
+# Works with PlaceholderAPI
 
 GENERAL-SETTINGS:
   JOIN_MESSAGE: false
@@ -58,12 +59,12 @@ JOIN-TITLE:
   HEADER: '&eWelcome to <server>'
   FOOTER: '&7Please enjoy your stay <player>!'
 
-TAB-LIST:
+TABLIST:
   ENABLED: true
-  HEADER: '&7Server: <server> &f| &7Name: &f<player>'
-  FOOTER: '&7<WEBSITE>'
+  HEADER: '<server>'
+  FOOTER: '&aWebsite: &7<WEBSITE> &aStore: &7<STORE> &aWhitelist: &f%server_has_whitelist%'
 
-WELCOME-MESSAGE:
+JOIN-MESSAGE:
   ENABLED: true
   CENTERED: true
   CONTENT:
@@ -76,6 +77,19 @@ WELCOME-MESSAGE:
     - '&csome link: &7<somelink>'
     - '&7fav site: &c<examplelink2>'
     - ''
+
+# This sidebar is STATIC, it doesn't update at the moment, so i don't recommend relying 100% on this one.
+SIDEBAR:
+  ENABLED: true
+  TITLE: '<server>'
+  CONTENT:
+    - '&c&m------------------'
+    - '%server_tps_1%'
+    - '&7Example line &b2'
+    - '&7Example line &a3'
+    - '&7Example line &34'
+    - '&7Example line &65'
+    - '&c&m------------------'
 
 HUB-ITEM:
   ENABLED: true

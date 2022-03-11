@@ -3,6 +3,7 @@ package me.invis.hubcore.config;
 import me.invis.hubcore.HubCore;
 import me.invis.hubcore.config.managers.*;
 import me.invis.hubcore.enums.Type;
+import me.invis.hubcore.util.StringFormatter;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 import static me.invis.hubcore.util.StringFormatter.format;
 
@@ -54,7 +56,7 @@ public class ConfigManager {
     }
 
     public Welcome welcome(Player target) {
-        ConfigurationSection welcomeMessageSection = config.getConfigurationSection("WELCOME-MESSAGE");
+        ConfigurationSection welcomeMessageSection = config.getConfigurationSection("JOIN-MESSAGE");
         return new Welcome(welcomeMessageSection.getBoolean("ENABLED"),
                 welcomeMessageSection.getBoolean("CENTERED"),
                 welcomeMessageSection.getStringList("CONTENT"),
@@ -156,8 +158,9 @@ public class ConfigManager {
     }
 
     public TabList tabList(Player target) {
-        ConfigurationSection tabListSection = config.getConfigurationSection("TAB-LIST");
-        return new TabList(tabListSection.getBoolean("ENABLED"),
+        ConfigurationSection tabListSection = config.getConfigurationSection("TABLIST");
+        return new TabList(target,
+                tabListSection.getBoolean("ENABLED"),
                 format(tabListSection.getString("HEADER"),
                         false,
                         target,
@@ -166,6 +169,17 @@ public class ConfigManager {
                         false,
                         target,
                         true));
+    }
+
+    public Scoreboard scoreboard(Player target) {
+        ConfigurationSection sidebarSection = config.getConfigurationSection("SIDEBAR");
+        List<String> content = sidebarSection.getStringList("CONTENT");
+        IntStream.range(0, content.size()).forEach(i -> content.set(i, format(content.get(i), false, target, true)));
+
+        return new Scoreboard(sidebarSection.getBoolean("ENABLED"),
+                target,
+                format(sidebarSection.getString("TITLE"), false, target, true),
+                content);
     }
 
     private ItemMeta hideFlags(ItemMeta input) {

@@ -4,5 +4,5 @@ main: me.invis.hubcore.HubCore
 author: Invisibilities
 description: '${project.description}'
 website: '${project.url}'
-dependency:
+depend:
   - ProtocolLib
