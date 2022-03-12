@@ -2,7 +2,6 @@ package me.invis.hubcore.listener;
 
 import me.invis.hubcore.enums.GeneralSetting;
 import me.invis.hubcore.enums.Mobs;
-import org.bukkit.entity.Damageable;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

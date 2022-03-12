@@ -2,9 +2,11 @@ package me.invis.hubcore.listener;
 
 import me.invis.hubcore.HubCore;
 import me.invis.hubcore.config.ConfigManager;
-import me.invis.hubcore.config.managers.*;
+import me.invis.hubcore.config.managers.GameMode;
+import me.invis.hubcore.config.managers.HubInventory;
+import me.invis.hubcore.config.managers.HubItem;
+import me.invis.hubcore.config.managers.HubItemAction;
 import me.invis.hubcore.enums.Type;
-import me.invis.hubcore.inventory.HubGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -41,20 +43,19 @@ public class ClickEvent implements Listener {
         if(!event.getCurrentItem().hasItemMeta()) return;
         Player clicker = (Player) event.getWhoClicked();
         HubInventory hubInventory = configManager.hubInventory(clicker);
-        if(event.getInventory().getName().equalsIgnoreCase(hubInventory.title())) {
-            event.setCancelled(true);
-            Type type = configManager.type();
-            for(GameMode gameMode : hubInventory.gameModes()) {
-                if(gameMode.itemStack().getItemMeta().getDisplayName().equalsIgnoreCase(event.getCurrentItem().getItemMeta().getDisplayName())) {
-                    if(type == Type.BUNGEECORD) Bukkit.dispatchCommand(clicker, "server " + gameMode.name());
+        if(!event.getInventory().getName().equalsIgnoreCase(hubInventory.title())) return;
+        event.setCancelled(true);
+        for(GameMode gameMode : hubInventory.gameModes()) {
+            if(gameMode.itemStack().getItemMeta().getDisplayName().equalsIgnoreCase(event.getCurrentItem().getItemMeta().getDisplayName())) {
+                if(configManager.type() == Type.BUNGEECORD) Bukkit.dispatchCommand(clicker, "server " + gameMode.name());
 
-                    else {
-                        World world = Bukkit.getWorld(gameMode.name());
-                        Location l = world.getSpawnLocation();
-                        clicker.teleport(new Location(world, l.getX(), l.getY(), l.getZ()));
-                    }
+                else {
+                    World world = Bukkit.getWorld(gameMode.name());
+                    Location l = world.getSpawnLocation();
+                    clicker.teleport(new Location(world, l.getX(), l.getY(), l.getZ()));
                 }
             }
         }
+
     }
 }
