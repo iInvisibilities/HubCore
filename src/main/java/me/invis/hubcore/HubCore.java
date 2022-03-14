@@ -15,6 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Arrays;
 
 public final class HubCore extends JavaPlugin {
+
     public static HubCore PLUGIN;
     public static FileConfiguration CONFIG;
     /* public static PluginDescriptionFile DESCRIPTION; */
@@ -23,6 +24,7 @@ public final class HubCore extends JavaPlugin {
     public static ProtocolManager PROTOCOL_MANAGER;
     public static JPerPlayerMethodBasedScoreboard SCOREBOARD;
     public static boolean PAPI;
+
 
     @Override
     public void onEnable() {
@@ -49,8 +51,6 @@ public final class HubCore extends JavaPlugin {
                 new GeneralPrevent(),
                 new ScoreboardApplier()
              );
-
-        /* new UpdateScoreboard().runTaskTimer(this, 20, 20); */
     }
 
     private void event(Listener... listeners) {

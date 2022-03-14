@@ -2,6 +2,7 @@ package me.invis.hubcore.listener;
 
 import me.invis.hubcore.HubCore;
 import me.invis.hubcore.config.managers.Scoreboard;
+import me.invis.hubcore.scheduler.UpdateScoreboard;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,6 +24,8 @@ public class ScoreboardApplier implements Listener {
         HubCore.SCOREBOARD.setTitle(target, scoreboardSettings.title());
         HubCore.SCOREBOARD.setLines(target, scoreboardSettings.content());
         HubCore.SCOREBOARD.addPlayer(target);
+
+        new UpdateScoreboard(target).runTaskTimer(HubCore.PLUGIN, 40, 40);
     }
 
 }
