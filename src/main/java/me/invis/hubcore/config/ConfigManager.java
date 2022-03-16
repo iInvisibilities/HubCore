@@ -2,7 +2,7 @@ package me.invis.hubcore.config;
 
 import me.invis.hubcore.HubCore;
 import me.invis.hubcore.config.managers.*;
-import me.invis.hubcore.enums.Type;
+import me.invis.hubcore.util.enums.Type;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Sound;

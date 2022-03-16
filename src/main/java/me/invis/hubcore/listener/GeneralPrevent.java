@@ -1,7 +1,7 @@
 package me.invis.hubcore.listener;
 
-import me.invis.hubcore.enums.GeneralSetting;
-import me.invis.hubcore.enums.Mobs;
+import me.invis.hubcore.util.enums.GeneralSetting;
+import me.invis.hubcore.util.enums.Mobs;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

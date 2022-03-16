@@ -6,7 +6,7 @@ import me.invis.hubcore.config.managers.GameMode;
 import me.invis.hubcore.config.managers.HubInventory;
 import me.invis.hubcore.config.managers.HubItem;
 import me.invis.hubcore.config.managers.HubItemAction;
-import me.invis.hubcore.enums.Type;
+import me.invis.hubcore.util.enums.Type;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

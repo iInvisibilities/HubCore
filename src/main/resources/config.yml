@@ -78,7 +78,6 @@ JOIN-MESSAGE:
     - '&7fav site: &c<examplelink2>'
     - ''
 
-# This sidebar is STATIC, it doesn't update at the moment, so i don't recommend relying 100% on this one.
 SIDEBAR:
   ENABLED: true
   TITLE: '<server>'

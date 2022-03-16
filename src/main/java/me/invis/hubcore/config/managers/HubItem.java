@@ -1,6 +1,6 @@
 package me.invis.hubcore.config.managers;
 
-import me.invis.hubcore.enums.Trigger;
+import me.invis.hubcore.util.enums.Trigger;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;

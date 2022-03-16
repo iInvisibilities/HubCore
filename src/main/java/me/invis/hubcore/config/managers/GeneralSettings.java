@@ -1,6 +1,6 @@
 package me.invis.hubcore.config.managers;
 
-import me.invis.hubcore.enums.GeneralSetting;
+import me.invis.hubcore.util.enums.GeneralSetting;
 
 public class GeneralSettings {
 

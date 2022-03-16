@@ -3,7 +3,7 @@ package me.invis.hubcore.listener;
 import me.invis.hubcore.HubCore;
 import me.invis.hubcore.config.ConfigManager;
 import me.invis.hubcore.config.managers.*;
-import me.invis.hubcore.tablist.setTabList;
+import me.invis.hubcore.util.tablist.setTabList;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

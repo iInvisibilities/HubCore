@@ -1,8 +1,8 @@
 package me.invis.hubcore.config.managers;
 
 import me.invis.hubcore.HubCore;
-import me.invis.hubcore.enums.Action;
-import me.invis.hubcore.inventory.HubGUI;
+import me.invis.hubcore.util.enums.Action;
+import me.invis.hubcore.util.inventory.HubGUI;
 import me.invis.hubcore.util.StringFormatter;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;

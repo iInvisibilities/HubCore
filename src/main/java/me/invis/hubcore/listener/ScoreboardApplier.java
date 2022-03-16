@@ -25,7 +25,7 @@ public class ScoreboardApplier implements Listener {
         HubCore.SCOREBOARD.setLines(target, scoreboardSettings.content());
         HubCore.SCOREBOARD.addPlayer(target);
 
-        new UpdateScoreboard(target).runTaskTimer(HubCore.PLUGIN, 40, 40);
+        new UpdateScoreboard(target).runTaskTimer(HubCore.PLUGIN, 20, 20);
     }
 
 }
