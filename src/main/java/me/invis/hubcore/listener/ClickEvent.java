@@ -2,10 +2,8 @@ package me.invis.hubcore.listener;
 
 import me.invis.hubcore.HubCore;
 import me.invis.hubcore.config.ConfigManager;
-import me.invis.hubcore.config.managers.GameMode;
-import me.invis.hubcore.config.managers.HubInventory;
-import me.invis.hubcore.config.managers.HubItem;
-import me.invis.hubcore.config.managers.HubItemAction;
+import me.invis.hubcore.config.managers.*;
+import me.invis.hubcore.util.ItemAction;
 import me.invis.hubcore.util.enums.Type;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -16,24 +14,38 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class ClickEvent implements Listener {
     ConfigManager configManager = HubCore.CONFIG_MANAGER;
 
     @EventHandler
     private void onClick(PlayerInteractEvent event) {
-        HubItem hubItem = configManager.hubItem(event.getPlayer());
-        if((       event.getItem() != null
-                && event.getItem().getType() != Material.AIR
-                && event.getItem().hasItemMeta()
-                && event.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(hubItem.itemStack().getItemMeta().getDisplayName()))
-                &&
+        ServersListItem hubItem = configManager.serversListItem(event.getPlayer());
+        VisibilityItem visibilityItem = configManager.visibilityItem(event.getPlayer());
+        ItemStack visibilityItemStack = visibilityItem.item().keySet().toArray(new ItemStack[0])[0];
+
+        ItemStack item = event.getItem();
+
+        if(     item == null
+                || item.getType() == Material.AIR
+                || !item.hasItemMeta()) return;
+
+        ItemMeta itemMeta = item.getItemMeta();
+
+        if(itemMeta.getDisplayName().equalsIgnoreCase(hubItem.itemStack().getItemMeta().getDisplayName()) &&
                 event.getAction().toString()
                         .contains(
                                 hubItem.trigger().toString().split("_")[0])) {
 
             event.setCancelled(true);
-            new HubItemAction(event.getPlayer());
+            new ServerListItemAction(event.getPlayer());
+        }
+        else if(itemMeta.getDisplayName().equalsIgnoreCase(visibilityItemStack.getItemMeta().getDisplayName())) {
+
+            event.setCancelled(true);
+            new VisibilityItemAction(event.getPlayer());
         }
     }
 

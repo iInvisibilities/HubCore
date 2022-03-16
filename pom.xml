@@ -6,7 +6,7 @@
 
     <groupId>HubCore</groupId>
     <artifactId>HubCore</artifactId>
-    <version>3.1-BETA</version>
+    <version>3.5</version>
     <packaging>jar</packaging>
 
     <name>HubCore</name>

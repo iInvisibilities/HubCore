@@ -9,6 +9,7 @@ public enum Action {
     INVENTORY("i"),
     SOUND("s"),
     PARTICLE("e"),
+    TOGGLE_PLAYERS_VISIBILITY("v"),
     COMMAND("c");
 
     private final String CHAR;

@@ -14,10 +14,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static me.invis.hubcore.util.StringFormatter.format;
@@ -56,33 +53,30 @@ public class ConfigManager {
 
     public Welcome welcome(Player target) {
         ConfigurationSection welcomeMessageSection = config.getConfigurationSection("JOIN-MESSAGE");
+        boolean enabled = welcomeMessageSection.getBoolean("CENTERED");
+        List<String> messageContent = welcomeMessageSection.getStringList("CONTENT");
+        messageContent.forEach(contentLine -> messageContent.set(messageContent.indexOf(contentLine), format(contentLine, enabled, target, true)));
+
         return new Welcome(welcomeMessageSection.getBoolean("ENABLED"),
-                welcomeMessageSection.getBoolean("CENTERED"),
-                welcomeMessageSection.getStringList("CONTENT"),
+                enabled,
+                messageContent,
                 target);
     }
 
-    public HubItem hubItem(Player target) {
-        ConfigurationSection hubItemSection = config.getConfigurationSection("HUB-ITEM");
+    public VisibilityItem visibilityItem(Player target) {
+        ConfigurationSection visibilityItemSection = config.getConfigurationSection("VISIBILITY-ITEM");
+        ConfigurationSection itemSection = visibilityItemSection.getConfigurationSection("ITEM");
+
+        return new VisibilityItem(visibilityItemSection.getBoolean("ENABLED"),
+                Collections.singletonMap(itemStackFromConfig(itemSection, target), itemSection.getInt("SLOT")), itemSection.getStringList("ACTION"));
+    }
+
+    public ServersListItem serversListItem(Player target) {
+        ConfigurationSection hubItemSection = config.getConfigurationSection("SERVERS-LIST-ITEM");
         ConfigurationSection itemStackSection = hubItemSection.getConfigurationSection("ITEMSTACK");
 
-        ItemStack itemStack = new ItemStack(Material.valueOf(itemStackSection.getString("MATERIAL")), itemStackSection.getInt("AMOUNT"));
-        ItemMeta itemMeta = itemStack.getItemMeta();
-
-        itemMeta.setDisplayName(format(itemStackSection.getString("NAME.CONTENT"), itemStackSection.getBoolean("NAME.CENTERED"), target, true));
-
-        boolean isCentered_HUBITEM = itemStackSection.getBoolean("LORE.CENTERED");
-        List<String> lore = itemStackSection.getStringList("LORE.CONTENT");
-        lore.forEach(loreLine -> lore.set(lore.indexOf(loreLine), format(loreLine, isCentered_HUBITEM, target, true)));
-        itemMeta.setLore(lore);
-
-        if(itemStackSection.getBoolean("GLOWING")) itemMeta.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
-
-
-        itemStack.setItemMeta(hideFlags(itemMeta));
-
-        return new HubItem(hubItemSection.getBoolean("ENABLED"),
-                itemStack,
+        return new ServersListItem(hubItemSection.getBoolean("ENABLED"),
+                itemStackFromConfig(itemStackSection, target),
                 hubItemSection.getInt("SLOT"),
                 hubItemSection.getString("TRIGGER"),
                 hubItemSection.getStringList("ACTION"));
@@ -93,20 +87,6 @@ public class ConfigManager {
         ConfigurationSection fillItemStackSection = hubInventorySection.getConfigurationSection("ITEMS.FILL-ITEM");
         ConfigurationSection gameModesSection = hubInventorySection.getConfigurationSection("ITEMS.GAMEMODES");
 
-        ItemStack fillItemStack = new ItemStack(Material.valueOf(fillItemStackSection.getString("MATERIAL")), fillItemStackSection.getInt("AMOUNT"));
-        ItemMeta fillItemMeta = fillItemStack.getItemMeta();
-
-        fillItemMeta.setDisplayName(format(fillItemStackSection.getString("NAME.CONTENT"), fillItemStackSection.getBoolean("NAME.CENTERED"), target, true));
-
-        boolean isCentered_FILLITEM = fillItemStackSection.getBoolean("LORE.CENTERED");
-        List<String> lore = fillItemStackSection.getStringList("LORE.CONTENT");
-        lore.forEach(loreLine -> lore.set(lore.indexOf(loreLine), format(loreLine, isCentered_FILLITEM, target, true)));
-        fillItemMeta.setLore(lore);
-
-        if(fillItemStackSection.getBoolean("GLOWING")) fillItemMeta.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
-
-        fillItemStack.setItemMeta(hideFlags(fillItemMeta));
-
         List<GameMode> gameModes = new ArrayList<>();
 
         Set<String> gameModeNames = gameModesSection.getKeys(false);
@@ -115,23 +95,9 @@ public class ConfigManager {
             ConfigurationSection gameModeSection = gameModesSection.getConfigurationSection(gameMode);
             ConfigurationSection itemStackSection = gameModeSection.getConfigurationSection("ITEMSTACK");
 
-            ItemStack itemStack = new ItemStack(Material.valueOf(itemStackSection.getString("MATERIAL")), itemStackSection.getInt("AMOUNT"));
-            ItemMeta itemMeta = itemStack.getItemMeta();
-
-            itemMeta.setDisplayName(format(itemStackSection.getString("NAME.CONTENT"), itemStackSection.getBoolean("NAME.CENTERED"), target, true));
-
-            boolean isCentered_GAMEMODEITEM = itemStackSection.getBoolean("LORE.CENTERED");
-            List<String> lore_GAMEMODEITEM = itemStackSection.getStringList("LORE.CONTENT");
-            lore_GAMEMODEITEM.forEach(loreLine -> lore_GAMEMODEITEM.set(lore_GAMEMODEITEM.indexOf(loreLine), format(loreLine, isCentered_GAMEMODEITEM, target, true)));
-            itemMeta.setLore(lore_GAMEMODEITEM);
-
-            if(itemStackSection.getBoolean("GLOWING")) itemMeta.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
-
-            itemStack.setItemMeta(hideFlags(itemMeta));
-
             gameModes.add(new GameMode(gameModeSection.getString("NAME"),
                     gameModeSection.getInt("SLOT"),
-                    itemStack));
+                    itemStackFromConfig(itemStackSection, target)));
         });
 
 
@@ -139,7 +105,7 @@ public class ConfigManager {
         return new HubInventory(format(hubInventorySection.getString("TITLE"), false, true),
                 hubInventorySection.getInt("SIZE"),
                 hubInventorySection.getBoolean("ITEMS.FILL"),
-                fillItemStack,
+                itemStackFromConfig(fillItemStackSection, target),
                 gameModes);
     }
 
@@ -184,5 +150,24 @@ public class ConfigManager {
     private ItemMeta hideFlags(ItemMeta input) {
         Arrays.stream(ItemFlag.values()).forEach(input::addItemFlags);
         return input;
+    }
+
+    private ItemStack itemStackFromConfig(ConfigurationSection section, Player target) {
+        ItemStack itemStack = new ItemStack(Material.valueOf(section.getString("MATERIAL")), section.getInt("AMOUNT"));
+        ItemMeta itemStackMeta = itemStack.getItemMeta();
+
+        itemStackMeta.setDisplayName(format(section.getString("NAME.CONTENT"), section.getBoolean("NAME.CENTERED"), target, true));
+
+        boolean isCentered_HUBITEM = section.getBoolean("LORE.CENTERED");
+        List<String> lore = section.getStringList("LORE.CONTENT");
+        lore.forEach(loreLine -> lore.set(lore.indexOf(loreLine), format(loreLine, isCentered_HUBITEM, target, true)));
+        itemStackMeta.setLore(lore);
+
+        if(section.getBoolean("GLOWING")) itemStackMeta.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
+
+
+        itemStack.setItemMeta(hideFlags(itemStackMeta));
+
+        return itemStack;
     }
 }

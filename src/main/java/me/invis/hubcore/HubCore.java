@@ -7,6 +7,7 @@ import me.invis.hubcore.config.ConfigManager;
 import me.invis.hubcore.listener.*;
 /* import me.invis.hubcore.scheduler.UpdateScoreboard; */
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 /* import org.bukkit.plugin.PluginDescriptionFile; */

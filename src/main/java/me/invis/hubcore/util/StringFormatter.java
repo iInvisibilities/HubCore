@@ -12,7 +12,7 @@ import java.util.Map;
 public class StringFormatter {
     private static final ConfigManager configManager = HubCore.CONFIG_MANAGER;
     private static final FileConfiguration config = HubCore.CONFIG;
-    private static final String trigger = config.getConfigurationSection("HUB-ITEM").getString("TRIGGER");
+    private static final String trigger = config.getConfigurationSection("SERVERS-LIST-ITEM").getString("TRIGGER");
     private static final String serverName = config.getConfigurationSection("SERVER").getString("NAME");
     public static String format(String input, boolean isCentered, boolean sites) {
 

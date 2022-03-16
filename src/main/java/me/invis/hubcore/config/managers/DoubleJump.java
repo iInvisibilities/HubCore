@@ -4,6 +4,7 @@ import org.bukkit.Effect;
 import org.bukkit.Sound;
 
 public class DoubleJump {
+
     private final boolean enabled;
     private final Sound sound;
     private final Effect effect;

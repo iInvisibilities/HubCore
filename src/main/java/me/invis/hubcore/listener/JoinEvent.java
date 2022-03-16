@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class JoinEvent implements Listener {
 
@@ -17,13 +18,18 @@ public class JoinEvent implements Listener {
         Player player = event.getPlayer();
 
         Welcome welcome = configManager.welcome(player);
-        HubItem hubItem = configManager.hubItem(player);
+        ServersListItem serversListItem = configManager.serversListItem(player);
+        VisibilityItem visibilityItem = configManager.visibilityItem(player);
         Title title = configManager.title(player);
         TabList tabList = configManager.tabList(player);
 
         if(welcome.isEnabled()) welcome.content().forEach(player::sendMessage);
 
-        if(hubItem.enabled()) player.getInventory().setItem(hubItem.slot(), hubItem.itemStack());
+        if(serversListItem.enabled()) player.getInventory().setItem(serversListItem.slot(), serversListItem.itemStack());
+
+
+        ItemStack item = visibilityItem.item().keySet().toArray(new ItemStack[0])[0];
+        if(visibilityItem.enabled()) player.getInventory().setItem(visibilityItem.item().get(item), item);
 
         if(title.enabled()) player.sendTitle(title.header(), title.footer());
 

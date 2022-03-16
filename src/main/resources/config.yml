@@ -1,10 +1,27 @@
 #########################################################
-# ${project.name}:
-# DESCRIPTION: ${project.description}
-# VERSION: ${project.version}
+# HubCore:
+# DESCRIPTION: the perfect perfection of a hub core.
+# VERSION: 3.1-BETA
 # AUTHOR: Invisibilities
 #########################################################
 # Works with PlaceholderAPI
+
+# Actions:
+# NOTE: there should be a | between the params (& there shouldn't be any space between the | and the param).
+
+  # [m] <message>: send a message to the player
+  # [i] open the hub inventory for the player
+
+  # https://helpch.at/docs/1.8.8/org/bukkit/Sound.html
+  # [s] <sound-type>: plays a sound for the player
+
+  # https://helpch.at/docs/1.8.8/org/bukkit/Effect.html
+  # [e] <effect-type>: plays an effect for the player
+
+  # executor: player, console
+  # [c] <executor> <command>: executes a command for the player
+
+  # [v] toggle player visibility
 
 GENERAL-SETTINGS:
   JOIN_MESSAGE: false
@@ -90,10 +107,31 @@ SIDEBAR:
     - '&7Example line &65'
     - '&c&m------------------'
 
-HUB-ITEM:
+VISIBILITY-ITEM:
+  ENABLED: true
+  ITEM:
+    NAME:
+      CENTERED: false
+      CONTENT: '&aToggle players visibility'
+    MATERIAL: EYE_OF_ENDER # https://helpch.at/docs/1.8.8/org/bukkit/Material.html
+    LORE:
+      CENTERED: false
+      CONTENT:
+        - '&7Right/Left click this item to toggle the visibility of other players to you.'
+        - '&7If you can see them, you''ll become not able to & vice versa!'
+    AMOUNT: 1
+    GLOWING: true
+    SLOT: 8
+
+    ACTION:
+    - '[m]|&aToggling the players visibility...'
+    - '[v]'
+    - '[s]|CAT_MEOW'
+
+SERVERS-LIST-ITEM:
   ENABLED: true
 
-  SLOT: 0 # https://bugs.mojang.com/secure/attachment/61101/Items_slot_number.jpg
+  SLOT: 4 # https://bugs.mojang.com/secure/attachment/61101/Items_slot_number.jpg
 
   ITEMSTACK:
     NAME:
@@ -111,20 +149,7 @@ HUB-ITEM:
 
   # (RIGHT/LEFT)-CLICK
   TRIGGER: RIGHT-CLICK
-
-  # [m] <message>: send a message to the player
-  # [i] open the hub inventory for the player
-
-  # https://helpch.at/docs/1.8.8/org/bukkit/Sound.html
-  # [s] <sound-type>: plays a sound for the player
-
-  # https://helpch.at/docs/1.8.8/org/bukkit/Effect.html
-  # [e] <effect-type>: plays an effect for the player
-
-  # executor: player, console
-  # [c] <executor> <command>: executes a command for the player
   ACTION:
-    # NOTE: there should be a | between the params (& there shouldn't be any space between the | and the param).
     - '[m]|&aOpening the hub servers menu for <server>&a, <player>...'
     - '[i]'
     - '[e]|HEART'

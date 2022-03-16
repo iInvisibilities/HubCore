@@ -3,7 +3,6 @@ package me.invis.hubcore.config.managers;
 import org.bukkit.entity.Player;
 
 import java.util.List;
-import static me.invis.hubcore.util.StringFormatter.format;
 
 public class Welcome {
     private final boolean isEnabled, isCentered;
@@ -27,8 +26,6 @@ public class Welcome {
     }
 
     public List<String> content() {
-        List<String> messageContent = this.messageContent;
-        messageContent.forEach(contentLine -> messageContent.set(messageContent.indexOf(contentLine), format(contentLine, this.isCentered, target, true)));
         return messageContent;
     }
 }
