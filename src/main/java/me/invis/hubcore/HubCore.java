@@ -3,6 +3,7 @@ package me.invis.hubcore;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import dev.jcsoftware.jscoreboards.JPerPlayerMethodBasedScoreboard;
+import me.invis.hubcore.commands.ReloadConfigCommand;
 import me.invis.hubcore.config.ConfigManager;
 import me.invis.hubcore.listener.*;
 /* import me.invis.hubcore.scheduler.UpdateScoreboard; */
@@ -52,6 +53,8 @@ public final class HubCore extends JavaPlugin {
                 new GeneralPrevent(),
                 new ScoreboardApplier()
              );
+
+        getCommand("hubcore").setExecutor(new ReloadConfigCommand());
     }
 
     private void event(Listener... listeners) {
